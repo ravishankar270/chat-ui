@@ -1,0 +1,32 @@
+.mssg-grid-left,.mssg-grid-right {
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+  }
+  .mssg-grid-right {
+    justify-content: flex-start;
+  }
+  .mssg-text {
+    /* border: 1px solid #6210CC; */
+    background-color: #6210CC;
+    color: white;
+    width: max-content;
+    min-width: 150px;
+    text-align: left;
+    padding: 5px 10px 10px;
+    border-radius: 15px 0px 15px 15px;
+    
+  }
+  .mssg-grid-right .mssg-text{
+    border-radius: 0px 15px 15px 15px;
+  }
+  .mssg-user {
+    color:yellow;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .mssg-time {
+    font-size: 11px;
+    text-align: right;
+  }
