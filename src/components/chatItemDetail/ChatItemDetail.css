@@ -1,9 +1,12 @@
 .user-info {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: "100%";
-  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.2);
-  padding: 5px 0;
-  height: 13%;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+  height: 9%;
+  padding: 4px 0;
+  padding-left: 10px;
 }
 
 .logged-in {
@@ -11,11 +14,18 @@
   margin-right: 2px;
 }
 
+.logged-out {
+  color: red;
+  margin-right: 2px;
+  /* margin-top: 2px; */
+}
+
 .detail-container {
   display: flex;
   flex-direction: column;
-  height: 85%;
-  justify-content: space-between;
+  height: 91%;
+  justify-content: flex-start;
+  position: relative;
 }
 .send {
   width: 10%;
@@ -25,19 +35,43 @@
   width: 90%;
   border-radius: 30px;
   margin-left: 20px;
+  margin-top: 15px;
   height: 45px;
 }
 .typing-user{
-    margin-left: 30px;
+    position: absolute;
     color: gray;
     font-size: 15px;
-    margin-bottom: 5px;
+    bottom:22px;
+    left: 30px;
+    text-transform: capitalize;
 }
 .mssg-container {
-  height: 70%;
+  height: 82%;
   width: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+  background-image: url("../../assets//wb.jpg");
+}
+.back-icon{
+  display: none;
+}
 
+@media (max-width: 767px) {
+  .detail-container{
+    height: 100%;
+  }
+  .mssg-container{
+    height: 80%;
+  }
+  .user-info{
+    border-bottom: 4px solid #6210CC;
+  }
+  .back-icon{
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline;
+  }
 }
 
 

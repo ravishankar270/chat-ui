@@ -1,0 +1,36 @@
+.chat-container{
+    display: flex;
+    height: 95vh;
+}
+
+.chat-item-container{
+    width: 30%;
+    overflow-y: auto;
+    border-right: 4px solid #6210CC;
+}
+
+.chat-detail-container{
+   width: 70%; 
+}
+
+@media (max-width: 767px) {
+    .chat-item-container{
+        width: 100%;
+        border-color: white;
+    }
+    .chat-detail-container{
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        transition: right 0.5s ease;
+        padding: 10px;
+        box-sizing: border-box;
+     }
+     .chat-detail-container.move {
+        right: 0;
+     }
+  }

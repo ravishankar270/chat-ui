@@ -30,3 +30,14 @@
     font-size: 11px;
     text-align: right;
   }
+  .read-container{
+    width: 65px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .check-mark {
+    color: rgb(61, 216, 133);
+  }
+  .check-mark-unread{
+    color: rgb(191, 184, 184);
+  }

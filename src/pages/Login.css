@@ -1,0 +1,25 @@
+.logo{
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.google{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Phones (320px - 767px) */
+@media (max-width: 767px) {
+    .logo{
+        width: 100%;
+    }
+    .google{
+        position: absolute;
+        bottom: 30px;
+        left: 130px;
+    }
+  }

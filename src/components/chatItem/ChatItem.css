@@ -1,4 +1,36 @@
-.chat-list {
+.chat-item {
     cursor: pointer;
+}
+.messageInfo{
+    width: 100%
+}
+.message{
+    width:inherit;
+}
+.time{
+    font-size: 14px;
+}
+.subMessage{
+    font-size: 14px;
+}
+.popup-container{
+    width: inherit;
+}
+.unread-popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px; /* Fixed width */
+    height: 20px; /* Fixed height */
+    background-color: #6210CC;
+    border-radius: 50%; /* Makes the element round */
+    overflow: hidden; /* Ensures content doesn't overflow */
+    text-align: center; 
+    color: white;
+}
+.unread-popup p {
+    margin: 0;
+    color: white;
+    font-size: 13px;
 }
 
