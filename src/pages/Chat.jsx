@@ -125,7 +125,11 @@ const Chat = ({ usersTyping, auth, users, setAuth, setUsersTyping }) => {
     if (data.active) {
       setActiveUsers((activeUsers) =>
         activeUsers.map((user) => {
-          if (user?.userMessages?._id === data?.userMessages?._id) {
+          if (
+            user?.userMessages?._id === data?.userMessages?._id &&
+            user.userMessages?._id &&
+            data.userMessages._id
+          ) {
             return {
               ...user,
               userMessages: {
