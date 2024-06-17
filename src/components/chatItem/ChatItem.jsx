@@ -46,7 +46,7 @@ const ChatItem = ({ userData, setDetailsInfo, unread, onClick }) => {
                 : message.message
               : ""}
           </div>
-          {(unread && parseInt(unread.read) !== 0) ||
+          {/* {(unread && parseInt(unread.read) !== 0) ||
           (message &&
             message.from !== sessionStorage.getItem("id") &&
             userData.userMessages.unread !== 0) ? (
@@ -55,7 +55,7 @@ const ChatItem = ({ userData, setDetailsInfo, unread, onClick }) => {
             </div>
           ) : (
             ""
-          )}
+          )} */}
         </div>
       </div>
     </div>

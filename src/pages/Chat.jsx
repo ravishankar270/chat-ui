@@ -18,74 +18,74 @@ const Chat = ({ usersTyping, auth, users, setAuth, setUsersTyping }) => {
     if (!auth) navigate("/login");
   }, []);
 
-  useEffect(() => {
-    if (auth) {
-      const handleRead = (data) => {
-        const dataExists = idExists(data.id);
-        if (dataExists) {
-          const result = unread.map((readData) =>
-            readData.id === data.id
-              ? {
-                  ...data,
-                  read: data.read,
-                }
-              : readData
-          );
-          setUnread(result);
-        } else {
-          setUnread((unread) => [...unread, data]);
-        }
-      };
-      const handleUnread = (id) => {
-        if (unread.length === 0) {
-          const newActiveUsers = activeUsers?.map((user) => {
-            if (
-              user.userMessages?.participant1 === id ||
-              user.userMessages?.participant2 === id
-            ) {
-              return {
-                ...user,
-                userMessages: {
-                  ...user.userMessages,
-                  unread: 0,
-                },
-              };
-            } else {
-              return user;
-            }
-          });
-          const newOfflineUsers = offlineUsers?.map((user) => {
-            if (
-              user.userMessages?.participant1 === id ||
-              user.userMessages?.participant2 === id
-            ) {
-              return {
-                ...user,
-                userMessages: {
-                  ...user.userMessages,
-                  unread: 0,
-                },
-              };
-            } else {
-              return user;
-            }
-          });
-          setActiveUsers(newActiveUsers);
-          setOfflineUsers(newOfflineUsers);
-        } else {
-          const result = unread.filter((readData) => readData.id !== id);
-          setUnread(result);
-        }
-      };
+  // useEffect(() => {
+  //   if (auth) {
+  //     const handleRead = (data) => {
+  //       const dataExists = idExists(data.id);
+  //       if (dataExists) {
+  //         const result = unread.map((readData) =>
+  //           readData.id === data.id
+  //             ? {
+  //                 ...data,
+  //                 read: data.read,
+  //               }
+  //             : readData
+  //         );
+  //         setUnread(result);
+  //       } else {
+  //         setUnread((unread) => [...unread, data]);
+  //       }
+  //     };
+  //     const handleUnread = (id) => {
+  //       if (unread.length === 0) {
+  //         const newActiveUsers = activeUsers?.map((user) => {
+  //           if (
+  //             user.userMessages?.participant1 === id ||
+  //             user.userMessages?.participant2 === id
+  //           ) {
+  //             return {
+  //               ...user,
+  //               userMessages: {
+  //                 ...user.userMessages,
+  //                 unread: 0,
+  //               },
+  //             };
+  //           } else {
+  //             return user;
+  //           }
+  //         });
+  //         const newOfflineUsers = offlineUsers?.map((user) => {
+  //           if (
+  //             user.userMessages?.participant1 === id ||
+  //             user.userMessages?.participant2 === id
+  //           ) {
+  //             return {
+  //               ...user,
+  //               userMessages: {
+  //                 ...user.userMessages,
+  //                 unread: 0,
+  //               },
+  //             };
+  //           } else {
+  //             return user;
+  //           }
+  //         });
+  //         setActiveUsers(newActiveUsers);
+  //         setOfflineUsers(newOfflineUsers);
+  //       } else {
+  //         const result = unread.filter((readData) => readData.id !== id);
+  //         setUnread(result);
+  //       }
+  //     };
 
-      socket.on("message_added", handleRead);
-      socket.on("updated_unread", handleUnread);
-      return () => {
-        socket.off("message_added", handleRead);
-        socket.off("updated_unread", handleUnread);
-      };
-    }
-  }, [auth, activeUsers, offlineUsers]);
+  //     socket.on("message_added", handleRead);
+  //     socket.on("updated_unread", handleUnread);
+  //     return () => {
+  //       socket.off("message_added", handleRead);
+  //       socket.off("updated_unread", handleUnread);
+  //     };
+  //   }
+  // }, [auth, activeUsers, offlineUsers]);
 
   useEffect(() => {
     const email = sessionStorage.getItem("email");
@@ -125,17 +125,21 @@ const Chat = ({ usersTyping, auth, users, setAuth, setUsersTyping }) => {
     if (data.active) {
       setActiveUsers((activeUsers) =>
         activeUsers.map((user) => {
-          if (
-            user?.userMessages?._id === data?.userMessages?._id &&
-            user.userMessages?._id &&
-            data.userMessages._id
-          ) {
+          if (user?.userMessages?._id === data?.userMessages?._id) {
             return {
               ...user,
-              userMessages: {
-                ...user.userMessages,
-                messages: [...user.userMessages.messages, data.newMessage],
-              },
+              userMessages:
+                user.userMessages?._id && data.userMessages?._id
+                  ? {
+                      ...user.userMessages,
+                      messages: [
+                        ...user.userMessages.messages,
+                        data.newMessage,
+                      ],
+                    }
+                  : {
+                      ...data.newMessage,
+                    },
             };
           } else {
             return user;
@@ -145,17 +149,21 @@ const Chat = ({ usersTyping, auth, users, setAuth, setUsersTyping }) => {
     } else {
       setOfflineUsers((offlineUsers) =>
         offlineUsers.map((user) => {
-          if (
-            user.userMessages?._id === data.userMessages?._id &&
-            user.userMessages?._id &&
-            data.userMessages._id
-          ) {
+          if (user.userMessages?._id === data.userMessages?._id) {
             return {
               ...user,
-              userMessages: {
-                ...user.userMessages,
-                messages: [...user.userMessages.messages, data.newMessage],
-              },
+              userMessages:
+                user.userMessages?._id && data.userMessages?._id
+                  ? {
+                      ...user.userMessages,
+                      messages: [
+                        ...user.userMessages.messages,
+                        data.newMessage,
+                      ],
+                    }
+                  : {
+                      ...data.newMessage,
+                    },
             };
           } else {
             return user;
