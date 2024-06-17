@@ -31,12 +31,31 @@ const ChatItemDetail = ({
 
   useEffect(() => {
     const handleMessage = (data) => {
-      setUsersTyping([]);
-      setMessages((msg) => [...msg, data]);
-      handleUpdateUserData({
-        ...detailsInfo,
-        newMessage: data,
-      });
+      console.log(data, detailsInfo);
+      setUsersTyping(null);
+      const msgReceived = data?.messages ? data.messages[0] : data.msgInfo;
+      console.log(msgReceived);
+      (msgReceived.from === detailsInfo?._id ||
+        sessionStorage.getItem("id") === msgReceived.from) &&
+        setMessages((msg) => [...msg, msgReceived]);
+        console.log(msgReceived.from === detailsInfo?._id
+          ? detailsInfo
+          : { id: data?.id ? data.id : data._id },detailsInfo);
+      detailsInfo
+        ? handleUpdateUserData({
+            ...(msgReceived.from === detailsInfo?._id
+              ? detailsInfo
+              : { id: data?.id ? data.id : data._id }),
+            newMessage: msgReceived,
+            p1:data.participant1,
+            p2:data.participant2
+          })
+        : handleUpdateUserData({
+            newMessage: msgReceived,
+            id: data?.id ? data.id : data._id,
+            p1:data.participant1,
+            p2:data.participant2
+          });
     };
     socket.on("message", handleMessage);
 
@@ -45,13 +64,14 @@ const ChatItemDetail = ({
     };
   }, [detailsInfo]);
 
+  // console.log(messages, "ppp");
+
   useEffect(() => {
     if (detailsInfo) {
-      console.log(detailsInfo.userMessages);
-      detailsInfo.userMessages
+      detailsInfo?.userMessages
         ? setMessages(detailsInfo.userMessages.messages)
         : setMessages([]);
-      setCurrentMsg("")
+      setCurrentMsg("");
     }
   }, [detailsInfo]);
 
@@ -59,7 +79,11 @@ const ChatItemDetail = ({
     if (event.key === "Enter") {
       handleClick();
     } else {
-      socket.emit("activity", sessionStorage.getItem("name"));
+      socket.emit("activity", {
+        name: sessionStorage.getItem("name"),
+        socketId: detailsInfo.socketId,
+        sender: sessionStorage.getItem("id"),
+      });
     }
   };
 
@@ -138,10 +162,8 @@ const ChatItemDetail = ({
               position: "relative",
             }}
           >
-            {usersTyping.length > 0 && (
-              <i className="typing-user">
-                {usersTyping.toString()} is Typing...
-              </i>
+            {usersTyping && usersTyping.sender === detailsInfo._id && (
+              <i className="typing-user">{usersTyping.name} is Typing...</i>
             )}
             <div
               className="d-flex"

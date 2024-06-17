@@ -122,14 +122,19 @@ const Chat = ({ usersTyping, auth, users, setAuth, setUsersTyping }) => {
   };
 
   const handleUpdateUserData = (data) => {
-    if (data.active) {
+    if ((data && data.active) || data?.id) {
       setActiveUsers((activeUsers) =>
         activeUsers.map((user) => {
-          if (user?.userMessages?._id === data?.userMessages?._id) {
+          if (
+            (user._id === data.p1 || user._id === data.p2) &&
+            (user?.userMessages?._id === data?.userMessages?._id ||
+              user?.userMessages?._id === data.id)
+          ) {
             return {
               ...user,
               userMessages:
-                user.userMessages?._id && data.userMessages?._id
+                (user.userMessages?._id && data.userMessages?._id) ||
+                user.userMessages?._id
                   ? {
                       ...user.userMessages,
                       messages: [
@@ -138,31 +143,9 @@ const Chat = ({ usersTyping, auth, users, setAuth, setUsersTyping }) => {
                       ],
                     }
                   : {
-                      ...data.newMessage,
-                    },
-            };
-          } else {
-            return user;
-          }
-        })
-      );
-    } else {
-      setOfflineUsers((offlineUsers) =>
-        offlineUsers.map((user) => {
-          if (user.userMessages?._id === data.userMessages?._id) {
-            return {
-              ...user,
-              userMessages:
-                user.userMessages?._id && data.userMessages?._id
-                  ? {
-                      ...user.userMessages,
-                      messages: [
-                        ...user.userMessages.messages,
-                        data.newMessage,
-                      ],
-                    }
-                  : {
-                      ...data.newMessage,
+                      messages: user.userMessages?.messages
+                        ? [...user.userMessages?.messages, data.newMessage]
+                        : [data.newMessage],
                     },
             };
           } else {
@@ -171,6 +154,37 @@ const Chat = ({ usersTyping, auth, users, setAuth, setUsersTyping }) => {
         })
       );
     }
+    // console.log(!exists);
+    // if (((data && !data.active) || data?.id) && !exists) {
+    //   console.log("inside this");
+    //   setOfflineUsers((offlineUsers) =>
+    //     offlineUsers.map((user) => {
+    //       if (
+    //         user?.userMessages?._id === data?.userMessages?._id ||
+    //         user?.userMessages?._id === data.id
+    //       ) {
+    //         return {
+    //           ...user,
+    //           userMessages:
+    //             (user.userMessages?._id && data.userMessages?._id) ||
+    //             user.userMessages?._id
+    //               ? {
+    //                   ...user.userMessages,
+    //                   messages: [
+    //                     ...user.userMessages.messages,
+    //                     data.newMessage,
+    //                   ],
+    //                 }
+    //               : {
+    //                   ...data.newMessage,
+    //                 },
+    //         };
+    //       } else {
+    //         return user;
+    //       }
+    //     })
+    //   );
+    // }
   };
   return (
     <>

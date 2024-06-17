@@ -11,7 +11,7 @@ function App() {
   const [auth, setAuth] = useState(false);
   const [users, setUsers] = useState([]);
   const intialRef = useRef(true);
-  const [usersTyping, setUsersTyping] = useState([]);
+  const [usersTyping, setUsersTyping] = useState(null);
   let activityTimer;
 
   useEffect(() => {
@@ -53,15 +53,11 @@ function App() {
   }, [auth]);
 
   useEffect(() => {
-    const handleActivity = (name) => {
-      setUsersTyping((usersTyping) => {
-        return usersTyping.includes(name)
-          ? usersTyping
-          : [...usersTyping, name];
-      });
+    const handleActivity = (data) => {
+      setUsersTyping(data);
       clearTimeout(activityTimer);
       activityTimer = setTimeout(() => {
-        setUsersTyping([]);
+        setUsersTyping(null);
       }, 3000);
     };
     socket.on("activity", handleActivity);
