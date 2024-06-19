@@ -16,10 +16,11 @@
 @media (max-width: 767px) {
     .logo{
         width: 100%;
+        height: 50%;
     }
     .google{
         position: absolute;
-        bottom: 30px;
-        left: 130px;
+        top: 150px;
+        left: 100px;
     }
   }

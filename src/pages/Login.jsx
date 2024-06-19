@@ -38,12 +38,12 @@ const Login = ({ auth, setAuth }) => {
   };
 
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
-      <Image src={login} width={"50%"} height={"80%"} className="logo" />
+    <div style={{ display: "flex", height: "100vh",justifyContent:"center",alignItems:"center" }}>
       <div className="google">
         <h1 style={{ color: "#6210CC", fontFamily: "cursive" }}> Chat IT </h1>
         <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
       </div>
+      <Image src={login} width={"50%"} height={"80%"} className="logo" />
     </div>
   );
 };
