@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { socket } from "./Socket";
 import Login from "./pages/Login";
 import axios from "./apiConfig/axios.config";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -88,6 +89,7 @@ function App() {
               path="/login"
               element={<Login auth={auth} setAuth={setAuth} />}
             />
+            <Route path="*" element={<NotFound />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
